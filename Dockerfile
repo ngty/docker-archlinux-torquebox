@@ -23,8 +23,17 @@ RUN cd /tmp && \
   mv /tmp/UnlimitedJCEPolicy/*.jar $JAVA_HOME/jre/lib/security/ && \
   rm -rf /tmp/UnlimitedJCEPolicy.zip /tmp/UnlimitedJCEPolicy
 
+# Wrapper script to run torquebox
+ENV RUNNER /usr/local/sbin/run_tbox
+RUN echo "#!/bin/bash" > $RUNNER
+RUN echo "PORT=\$( ip addr | grep inet | grep eth0 | \\" >> $RUNNER
+RUN echo "        awk '{print \$2}' | sed 's|/.*||' )" >> $RUNNER
+RUN echo "JAVA_OPTS=-Djboss.bind.address=\$PORT" >> $RUNNER
+RUN echo "$JRUBY_HOME/bin/torquebox run" >> $RUNNER
+RUN chmod +x $RUNNER
+
 # Expose service port(s)
 EXPOSE 8080
 
 # Command to boot
-ENTRYPOINT $JRUBY_HOME/bin/torquebox run
+ENTRYPOINT $RUNNER
