@@ -1,5 +1,5 @@
 IMG=ngty/archlinux-torquebox
-TAG=latest
+TAG=3.0.x
 
 build:
 	docker build -t $(IMG):$(TAG) .
