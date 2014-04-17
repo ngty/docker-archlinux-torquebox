@@ -8,5 +8,5 @@ debug:
 	docker run -i -t --entrypoint /bin/bash $(IMG):$(TAG)
 
 push:
-	docker push $(IMG)
+	docker push $(IMG):$(TAG)
 
