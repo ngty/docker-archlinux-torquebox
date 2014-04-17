@@ -24,10 +24,11 @@ RUN cd /tmp && \
   rm -rf /tmp/UnlimitedJCEPolicy.zip /tmp/UnlimitedJCEPolicy
 
 # Wrapper script to run torquebox
-ADD scripts/torquebox /usr/local/sbin/torquebox
+ENV TORQUEBOX_RUNNER /usr/local/sbin/torquebox
+ADD scripts/torquebox $TORQUEBOX_RUNNER
 
 # Expose service port(s)
 EXPOSE 8080
 
 # Command to boot
-ENTRYPOINT $RUNNER
+ENTRYPOINT $TORQUEBOX_RUNNER
