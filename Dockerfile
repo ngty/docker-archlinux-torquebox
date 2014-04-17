@@ -24,15 +24,14 @@ RUN cd /tmp && \
   rm -rf /tmp/UnlimitedJCEPolicy.zip /tmp/UnlimitedJCEPolicy
 
 # Wrapper script to run torquebox
-ENV RUNNER /usr/local/sbin/run_tbox
-RUN echo "#!/bin/bash" > $RUNNER
-RUN echo "PORT=\$( ip addr | grep inet | grep eth0 | \\" >> $RUNNER
-RUN echo "        awk '{print \$2}' | sed 's|/.*||' )" >> $RUNNER
-RUN echo "$JRUBY_HOME/bin/torquebox run -b \$PORT" >> $RUNNER
-RUN chmod +x $RUNNER
+ENV TORQUEBOX_RUNNER /usr/local/sbin/torquebox
+ADD scripts/torquebox $TORQUEBOX_RUNNER
 
 # Expose service port(s)
 EXPOSE 8080
 
 # Command to boot
-ENTRYPOINT $RUNNER
+ENTRYPOINT $TORQUEBOX_RUNNER
+
+# See https://github.com/dotcloud/docker/issues/4266
+CMD []
