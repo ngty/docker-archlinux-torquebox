@@ -32,3 +32,6 @@ EXPOSE 8080
 
 # Command to boot
 ENTRYPOINT $TORQUEBOX_RUNNER
+
+# See https://github.com/dotcloud/docker/issues/4266
+CMD []

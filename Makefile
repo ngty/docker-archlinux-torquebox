@@ -5,7 +5,7 @@ build:
 	docker build -t $(IMG):$(TAG) .
 
 debug:
-	docker run -i -t $(IMG):$(TAG) shell
+	docker run -i -t --entrypoint /bin/bash $(IMG):$(TAG)
 
 push:
 	docker push $(IMG)
